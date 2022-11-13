@@ -35,8 +35,14 @@ jobs:
       FUNCTION_NAME: name-of-function
     steps:
       - uses: actions/checkout@v3
-      - uses: axel-op/package-google-cloud-function-java@main
+      - uses: actions/setup-java@v2
+        with:
+          java-version: 11
+          distribution: adopt
+      - uses: axel-op/package-java-azure-function@main
         id: package
+        with:
+          function-name: ${{ env.FUNCTION_NAME }}
       - name: Deploy on Azure
         uses: Azure/functions-action@v1
         with:
